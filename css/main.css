@@ -1,0 +1,18 @@
+/* 
+    Document   : main
+    Created on : 21.3.2014, 9:53:54
+    Author     : Juho
+    Description:
+        Purpose of the stylesheet follows.
+*/
+
+root { 
+    display: block;
+
+}
+
+div.alaoikea { position: absolute; height: 24px; }
+div.alaoikea button { position: absolute; left: 110px; top: 110px; }
+
+body { padding-top: 70px; }
+
