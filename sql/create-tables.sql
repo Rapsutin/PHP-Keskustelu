@@ -1,14 +1,20 @@
 CREATE TABLE Kayttaja(
 	nimimerkki varchar(20) NOT NULL PRIMARY KEY,
 	salasana varchar(20) NOT NULL,
-	viestejä integer DEFAULT 0,
+	viesteja integer DEFAULT 0,
 	liittymisaika date NOT NULL,
 	avatar bytea
 	);
 
+CREATE TABLE Yllapitaja(
+    nimimerkki varchar(20) NOT NULL PRIMARY KEY,
+    salasana varchar(20) NOT NULL
+    );
+
 CREATE TABLE Aihe(
 	id SERIAL PRIMARY KEY NOT NULL,
 	luontiaika timestamp NOT NULL,
+        alue varchar(100) NOT NULL,
 	nimi varchar(100) NOT NULL
 	);
 
