@@ -17,7 +17,7 @@ class Kayttaja {
 
     public static function etsiKayttajaTunnuksilla($kayttaja, $salasana) {
         $sql = "SELECT 
-                    nimimerkki, salasana 
+                    *
                 FROM 
                     Kayttaja 
                 WHERE
@@ -32,7 +32,29 @@ class Kayttaja {
         if ($tulos == null) {
             return null;
         } else {
-            $kayttaja = new Kayttaja($tulos->nimimerkki, $tulos->salasana, NULL, NULL, NULL);
+            $kayttaja = new Kayttaja($tulos->nimimerkki, $tulos->salasana, 
+                    $tulos->viesteja, $tulos->liittymisaika, $tulos->avatar);
+        }
+
+        return $kayttaja;
+    }
+    public static function etsiKayttajaNimimerkilla($kayttaja) {
+        $sql = "SELECT *
+                FROM 
+                    Kayttaja 
+                WHERE
+                    nimimerkki = ?
+                LIMIT 1";
+        $yhteys = getTietokantayhteys();
+        $kysely = $yhteys->prepare($sql);
+        $kysely->execute(array($kayttaja));
+
+        $tulos = $kysely->fetchObject();
+        if ($tulos == null) {
+            return null;
+        } else {
+            $kayttaja = new Kayttaja($tulos->nimimerkki, $tulos->salasana, $tulos->viesteja,
+                    $tulos->liittymisaika, $tulos->avatar);
         }
 
         return $kayttaja;

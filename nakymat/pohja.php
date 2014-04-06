@@ -52,7 +52,7 @@ if (onKirjautunut()) {
         <?php endif; ?>
 
         <?php
-        require '../nakymat/' . $sivu . '.php';
+        require '../nakymat/' . $sivu;
         ?>
     </body>
 </html>
