@@ -58,6 +58,15 @@ class Aihe {
         }
         return $ok;
     }
+    
+    public function paivitaTietokantaan() {
+        $sql = 'UPDATE Aihe SET alue = ?, nimi=? WHERE id = ?';
+        $kysymysmerkit = array($this->alue, $this->nimi, $this->id);
+        Kysely::teeKysely($sql, $kysymysmerkit);
+    }
+    
+    
+    
 
     public function getID() {
         return $this->id;

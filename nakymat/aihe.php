@@ -1,12 +1,23 @@
 
 <?php 
 require_once 'libs/mallit/Kayttaja.php'; 
+require_once 'libs/kirjautunut.php';
 require_once 'libs/mallit/Aihe.php';
 $aihe = Aihe::getAiheJollaID($data->aiheID);
 
 ?>
 <div class="container">
-    <h4>Aihe: <?php echo $aihe->getNimi(); ?></h4>
+    <h4>Aihe: <?php echo $aihe->getNimi(); ?>
+        <?php 
+        if (onKirjautunut()) {
+            if($_SESSION['kirjautunut']->onkoYllapitaja()) {
+        ?>
+        <a type="button" class="btn btn-link" href="muokkaaAihetta.php?aiheID=<?php echo $aihe->getID(); ?>">
+            Muokkaa aihetta
+        </a>
+        <?php }} ?>
+        
+    </h4>
     <div  class="panel panel-default">
         <table class="table table-bordered">
             <col width="50px" />

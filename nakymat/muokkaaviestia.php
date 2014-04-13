@@ -10,7 +10,7 @@ $viesti = Viesti::etsiViestiJollaID($data->viestiID);
         <textarea rows="6" cols="50" name ="viesti"><?php echo $viesti->getTeksti() ?></textarea>
         <div>
             <button class="btn btn-default"><span class="glyphicon glyphicon-share-alt"></span> Muokkaa</button>
-            <a type="button" class="btn btn-default" href="muokkaaviestia.php?poista=<?php echo $viesti->getId().'&aiheID='.$data->aiheID ?>"><span class="glyphicon glyphicon-remove-sign"></span> Poista</a>
+            <a type="button" class="btn btn-danger" href="muokkaaviestia.php?poista=<?php echo $viesti->getId().'&aiheID='.$data->aiheID ?>"><span class="glyphicon glyphicon-remove-sign"></span> Poista</a>
         </div>
     </form>
 

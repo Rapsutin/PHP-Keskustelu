@@ -9,6 +9,7 @@ $poistettava = $_GET['poista'];
 $viestinTeksti = $_POST['viesti'];
 $onkoPainettuLaheta = $_GET['tarkistaViesti'];
 
+
 $viesti = Viesti::etsiViestiJollaID($viestiID);
 session_start();
 $kirjoittaja = (object) $_SESSION['kirjautunut'];

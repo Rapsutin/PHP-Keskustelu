@@ -5,19 +5,24 @@ require_once 'libs/mallit/Aihe.php';
 require_once 'libs/mallit/Kayttaja.php';
 require_once 'libs/mallit/Viesti.php';
 
-if(!empty($_POST['aiheenNimi']) && empty($_POST['viesti'])) {
-    naytaNakyma('uusiaihe.php', array('alue' => $_GET['alue'], 
+$aiheenNimi = $_POST['aiheenNimi'];
+$viestinTeksti = $_POST['viesti'];
+$alue = $_GET['alue'];
+
+
+if(!empty($aiheenNimi) && empty($viestinTeksti)) {
+    naytaNakyma('uusiaihe.php', array('alue' => $alue, 
                                       'virhe' => 'Aloitusviesti ei voi olla tyhjä!',
-                                      'aiheenNimi' => $_POST['aiheenNimi']));
+                                      'aiheenNimi' => $aiheenNimi));
 }
-if(empty($_POST['aiheenNimi']) && !empty($_POST['viesti'])) {
-    naytaNakyma('uusiaihe.php', array('alue' => $_GET['alue'], 
+if(empty($aiheenNimi) && !empty($viestinTeksti)) {
+    naytaNakyma('uusiaihe.php', array('alue' => $alue, 
                                       'virhe' => 'Aiheella on oltava nimi!',
-                                      'viesti' => $_POST['viesti']));
+                                      'viesti' => $viestinTeksti));
 }
 
-if(!empty($_POST['aiheenNimi']) && !empty($_POST['viesti'])) {
-    $aihe = new Aihe(null, date('Y-m-d G:i:s'), $_GET['alue'], $_POST['aiheenNimi']);
+if(!empty($aiheenNimi) && !empty($viestinTeksti)) {
+    $aihe = new Aihe(null, date('Y-m-d G:i:s'), $alue, $aiheenNimi);
     $aihe->lisaaKantaan();
     
     session_start();
@@ -25,10 +30,10 @@ if(!empty($_POST['aiheenNimi']) && !empty($_POST['viesti'])) {
     $kirjoittaja = $_SESSION['kirjautunut'];
     $kayttajanNimimerkki = $kirjoittaja->getNimimerkki();
     
-    $viesti = new Viesti(-1, $kayttajanNimimerkki, $postaushetki, $_POST['viesti'], $aihe->getID());
+    $viesti = new Viesti(-1, $kayttajanNimimerkki, $postaushetki, $viestinTeksti, $aihe->getID());
     $viesti->lisaaKantaan();
     
     
     header('Location: aihe.php?id='.$aihe->getID().'&sivu=1');
 }
-naytaNakyma('uusiaihe.php', array('alue' => $_GET['alue']));
+naytaNakyma('uusiaihe.php', array('alue' => $alue));
