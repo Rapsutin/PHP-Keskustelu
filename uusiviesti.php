@@ -1,10 +1,10 @@
 <?php
 
-require_once 'nakyma.php';
-require_once 'mallit/Aihe.php';
-require_once 'mallit/Viesti.php';
-require_once 'mallit/Kayttaja.php';
-require_once 'kirjautunut.php';
+require_once 'libs/nakyma.php';
+require_once 'libs/mallit/Aihe.php';
+require_once 'libs/mallit/Viesti.php';
+require_once 'libs/mallit/Kayttaja.php';
+require_once 'libs/kirjautunut.php';
 
 $aiheID = (int) $_GET['aiheID'];
 

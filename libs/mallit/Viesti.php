@@ -1,7 +1,7 @@
 <?php
 
-require_once '../libs/tietokantayhteys.php';
-require_once '../libs/kysely.php';
+require_once 'libs/tietokantayhteys.php';
+require_once 'libs/kysely.php';
 
 class Viesti {
 

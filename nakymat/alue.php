@@ -1,6 +1,6 @@
 <?php
-require_once '../libs/mallit/Viesti.php';
-require_once '../libs/kirjautunut.php'
+require_once 'libs/mallit/Viesti.php';
+require_once 'libs/kirjautunut.php'
 ?>
 <div class="container">
     <div  class="panel panel-default">
@@ -35,7 +35,7 @@ require_once '../libs/kirjautunut.php'
 
         </div>
     <?php if (onKirjautunut()) { ?>
-            <a type="button" class="btn btn-default" href="../libs/uusiaihe.php?alue=Yleinen%20keskustelu">
+            <a type="button" class="btn btn-default" href="uusiaihe.php?alue=Yleinen%20keskustelu">
                 <span class="glyphicon glyphicon-plus"></span> Uusi aihe
             </a>
     <?php } ?>

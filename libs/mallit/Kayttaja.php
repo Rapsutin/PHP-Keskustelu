@@ -1,5 +1,5 @@
 <?php
-require_once '../libs/kysely.php';
+require_once 'libs/kysely.php';
 class Kayttaja {
 
     private $nimimerkki;

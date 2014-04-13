@@ -2,10 +2,10 @@
 
 <?php
 
-require 'nakyma.php';
-require 'tietokantayhteys.php';
-require 'mallit/Kayttaja.php';
-require_once 'kirjautunut.php';
+require 'libs/nakyma.php';
+require 'libs/tietokantayhteys.php';
+require 'libs/mallit/Kayttaja.php';
+require_once 'libs/kirjautunut.php';
 
 
 if(onKirjautunut()) {

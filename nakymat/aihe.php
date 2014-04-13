@@ -1,7 +1,7 @@
 
 <?php 
-require_once '../libs/mallit/Kayttaja.php'; 
-require_once '../libs/mallit/Aihe.php';
+require_once 'libs/mallit/Kayttaja.php'; 
+require_once 'libs/mallit/Aihe.php';
 $aihe = Aihe::getAiheJollaID($data->aiheID);
 
 ?>
@@ -43,7 +43,7 @@ $aihe = Aihe::getAiheJollaID($data->aiheID);
     </div>
 
     <?php if (onKirjautunut()) { ?>
-    <a type="button" class="btn btn-default" href="../libs/uusiviesti.php?aiheID=<?php echo $aihe->getID(); ?>">
+    <a type="button" class="btn btn-default" href="uusiviesti.php?aiheID=<?php echo $aihe->getID(); ?>">
             <span class="glyphicon glyphicon-share-alt"></span> Uusi viesti
         </a>
     <?php } ?>

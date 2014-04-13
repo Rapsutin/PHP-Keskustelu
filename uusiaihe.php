@@ -1,9 +1,9 @@
 <?php
 
-require_once 'nakyma.php';
-require_once 'mallit/Aihe.php';
-require_once 'mallit/Kayttaja.php';
-require_once 'mallit/Viesti.php';
+require_once 'libs/nakyma.php';
+require_once 'libs/mallit/Aihe.php';
+require_once 'libs/mallit/Kayttaja.php';
+require_once 'libs/mallit/Viesti.php';
 
 if(!empty($_POST['aiheenNimi']) && empty($_POST['viesti'])) {
     naytaNakyma('uusiaihe.php', array('alue' => $_GET['alue'], 

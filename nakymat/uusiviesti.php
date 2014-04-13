@@ -1,6 +1,6 @@
 
 <?php
-require_once '../libs/mallit/Aihe.php';
+require_once 'libs/mallit/Aihe.php';
 
 $aihe = $data->aihe;
 

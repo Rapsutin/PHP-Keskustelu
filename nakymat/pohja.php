@@ -1,6 +1,6 @@
 <?php
-require_once 'kirjautunut.php';
-require_once 'mallit/Kayttaja.php';;
+require_once 'libs/kirjautunut.php';
+require_once 'libs/mallit/Kayttaja.php';;
 if (onKirjautunut()) {
     session_start();
     $kirjoittaja = $_SESSION['kirjautunut'];
@@ -9,9 +9,9 @@ if (onKirjautunut()) {
 <!DOCTYPE html>
 <html>
     <head>
-        <link href="../css/bootstrap.css" rel="stylesheet">
-        <link href="../css/bootstrap-theme.css" rel="stylesheet">
-        <link href="../css/main.css" rel="stylesheet">
+        <link href="css/bootstrap.css" rel="stylesheet">
+        <link href="css/bootstrap-theme.css" rel="stylesheet">
+        <link href="css/main.css" rel="stylesheet">
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>PHP-Keskustelu</title>
     </head>
@@ -34,7 +34,7 @@ if (onKirjautunut()) {
             </div>
             <div class="navbar-header pull-right">
                 <?php if (onKirjautunut()) {?>
-                    <form action="uloskirjautuminen.php" method ="GET">
+                    <form action="libs/uloskirjautuminen.php" method ="GET">
                         <button type="submit" class="btn btn-link navbar-btn">Kirjaudu ulos</button>
                     </form>
                 <?php } 
@@ -52,7 +52,7 @@ if (onKirjautunut()) {
         <?php endif; ?>
 
         <?php
-        require '../nakymat/' . $sivu;
+        require 'nakymat/' . $sivu;
         ?>
     </body>
 </html>
