@@ -10,8 +10,8 @@ require_once 'libs/kirjautunut.php';
 
 if(onKirjautunut()) {
     naytaNakyma('etusivu.php', array('virhe' => 'Virhe! Olet jo kirjautunut!'));
-    
 }
+
 
 if (empty($_POST["nimimerkki"]) && empty($_POST["salasana"])) {
     naytaNakyma('kirjautuminen.php');
@@ -34,6 +34,7 @@ if (empty($_POST["salasana"])) {
   }
 $salasana = $_POST["salasana"];
 
+//Yritetään kirjautua.
 if(Kayttaja::etsiKayttajaTunnuksilla($kirjoittaja, $salasana) != NULL) {
     session_start();
     $kayttajaObject = Kayttaja::etsiKayttajaTunnuksilla($kirjoittaja, $salasana);

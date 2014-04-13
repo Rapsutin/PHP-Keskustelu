@@ -7,6 +7,7 @@ $aiheID = $_GET['aiheID'];
 $aiheenNimi = $_POST['aiheenNimi'];
 $aiheenAlue = $_POST['alue'];
 
+//Muokkaukset tehty.
 if(isset($aiheenNimi) && isset($aiheenAlue)) {
     $muokattu = Aihe::getAiheJollaID($aiheID);
     $muokattu->setAlue($aiheenAlue);

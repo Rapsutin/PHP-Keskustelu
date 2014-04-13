@@ -13,7 +13,7 @@ if (!onKirjautunut()) {
 }
 
 
-
+//Jos viesti on kirjoitettu, niin lisätään se kantaan.
 if (!empty($_POST['viesti'])) {
     session_start();
     $postaushetki = date('Y-m-d G:i:s');

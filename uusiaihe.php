@@ -21,6 +21,7 @@ if(empty($aiheenNimi) && !empty($viestinTeksti)) {
                                       'viesti' => $viestinTeksti));
 }
 
+//Lisätään uusi aihe.
 if(!empty($aiheenNimi) && !empty($viestinTeksti)) {
     $aihe = new Aihe(null, date('Y-m-d G:i:s'), $alue, $aiheenNimi);
     $aihe->lisaaKantaan();

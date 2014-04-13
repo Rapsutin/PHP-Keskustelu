@@ -39,8 +39,9 @@ $muokattavaAihe = Aihe::getAiheJollaID($muokattavanID);
 
         <div>
             <button class="btn btn-default">Tallenna</button>
-            <a type="button" class="btn btn-danger" href="muokkaaAihetta.php.php?poista=<?php echo $muokattavaAihe->getId() ?>"><span class="glyphicon glyphicon-remove-sign"></span> Poista</a>
+            <a type="button" class="btn btn-danger" href="muokkaaAihetta.php?poista=<?php echo $muokattavaAihe->getId() ?>"><span class="glyphicon glyphicon-remove-sign"></span> Poista</a>
         </div>
     
     </form>
+    TÄMÄ EI VIELÄ TOIMI!
 </div>
