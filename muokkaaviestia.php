@@ -15,9 +15,10 @@ session_start();
 $kirjoittaja = (object) $_SESSION['kirjautunut'];
 
 if($kirjoittaja->getNimimerkki() != $viesti->getKirjoittaja() && !$kirjoittaja->onkoYllapitaja()) {
-    header('Location: aihe.php?id='.$data->aiheID);
+    header('Location: aihe.php?id='.$aiheID);
 }
 
+//TODO: Tässä pitäisi päivittää viestilaskuria
 if(!empty($poistettava)) {
     Viesti::poistaViesti($poistettava);
     header('Location: aihe.php?id='.$aiheID);

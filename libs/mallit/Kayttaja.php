@@ -17,7 +17,12 @@ class Kayttaja {
         $this->avatar = $avatar;
         $this->onYllapitaja = $onYllapitaja;
     }
-
+    /**
+     * @param type $kayttaja
+     * @param type $salasana
+     * @return type Palauttaa tunnuksia vastaavan käyttäjän. 
+     * Jos ei löydy, niin palauttaa null.
+     */
     public static function etsiKayttajaTunnuksilla($kayttaja, $salasana) {
         $sql = "SELECT 
                     *
@@ -35,6 +40,13 @@ class Kayttaja {
 
         return $kayttaja;
     }
+    
+    /**
+     * @param type $kayttaja Nimimerkki.
+     * @param type $salasana
+     * @return type Palauttaa nimimerkkiä vastaavan käyttäjän. 
+     * Jos ei löydy, niin palauttaa null.
+     */
     public static function etsiKayttajaNimimerkilla($kayttaja) {
         $sql = "SELECT *
                 FROM 
@@ -52,6 +64,13 @@ class Kayttaja {
         return $kayttaja;
     }
     
+    /**
+     * Palauttaa käyttäjäolion fetchObject-kutsulla
+     * saadusta tuloksesta.
+     * @param type $tulos fetchObjectin tulos.
+     * @return \Kayttaja|null Palauttaa käyttäjä-olion, mutta
+     * jos käyttäjää ei löydy kannasta, palautetaan null.
+     */
     private static function palautaKayttaja($tulos) {
         if ($tulos == null) {
             return null;
@@ -63,11 +82,26 @@ class Kayttaja {
         }
     }
     
-    public function lisaaYksiViestilaskuriin() {
-        $this->viesteja += 1;
+    /**
+     * Päivittää käyttäjän viestilaskuria.
+     * @param type $lisattava Negatiivinen luku vähentää viestejä,
+     * positiivinen lisää.
+     */
+    public function lisaaViestilaskuriin($lisattava) {
+        $this->viesteja += $lisattava;
         $sql = "UPDATE Kayttaja SET viesteja=? WHERE nimimerkki=?";
         $kysymysmerkit = array($this->viesteja, $this->nimimerkki);
         Kysely::teeKysely($sql, $kysymysmerkit);
+    }
+    
+    
+    public function lisaaYksiViestilaskuriin() {
+        $this->lisaaViestilaskuriin(1);
+    }
+    
+    
+    public function vahennaYksiViestilaskurista() {
+        $this->lisaaViestilaskuriin(-1);
     }
 
     public function getNimimerkki() {

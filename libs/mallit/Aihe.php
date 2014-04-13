@@ -16,7 +16,8 @@ class Aihe {
         $this->alue = $alue;
         $this->nimi = $nimi;
     }
-
+    
+    
     public static function getAiheJollaID($id) {
         $sql = "SELECT * FROM Aihe WHERE id = ? LIMIT 1";
         $kysymysmerkit = array($id);
@@ -43,6 +44,10 @@ class Aihe {
         return $aiheet;
     }    
     
+    /**
+     * Lisää aiheen tietokantaan.
+     * @return type
+     */
     public function lisaaKantaan() {
         
         $sql = "INSERT INTO Aihe(luontiaika, alue, nimi) 
@@ -56,9 +61,13 @@ class Aihe {
         if ($ok) {
             $this->id = $kysely->fetchColumn();
         }
-        return $ok;
+        return $ok; //en tarvinne tätä
     }
     
+    /**
+     * Päivittää oliota vastaavan monikon
+     * olion tietoja vastaaviksi.
+     */
     public function paivitaTietokantaan() {
         $sql = 'UPDATE Aihe SET alue = ?, nimi=? WHERE id = ?';
         $kysymysmerkit = array($this->alue, $this->nimi, $this->id);

@@ -1,5 +1,9 @@
 <?php
 
+/**
+ * Kertoo onko käyttäjä kirjautunut palveluun.
+ * @return boolean True jos on, muuten false.
+ */
 function onKirjautunut() {
     session_start();
     

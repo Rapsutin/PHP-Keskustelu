@@ -18,7 +18,12 @@ class Viesti {
         $this->teksti = $teksti;
         $this->aihe = $aihe;
     }
-
+    
+    /**
+     * Palauttaa kaikki viestit aiheesta.
+     * @param type $aiheID Aiheen ID.
+     * @return type Taulukko viestiolioita.
+     */
     public static function etsiKaikkiViestitAiheesta($aiheID) {
         $sql = "SELECT *
                 FROM
@@ -33,7 +38,14 @@ class Viesti {
         return Viesti::palautaViesteja($kysymysmerkit, $sql);
     }
     
-    public static function palautaYhdenSivunViestit($viestejaSivulla, $sivu, $aiheID) {
+    /**
+     * Palauttaa yhden sivun viestit taulukkona.
+     * @param type $viestejaSivulla Montako viestiä näytetään sivulla.
+     * @param type $sivunumero Minkä sivun viestit.
+     * @param type $aiheID Aiheen ID.
+     * @return type Taulukko viestiolioita.
+     */
+    public static function palautaYhdenSivunViestit($viestejaSivulla, $sivunumero, $aiheID) {
         $sql = "SELECT *
                 FROM
                     Viesti
@@ -43,11 +55,16 @@ class Viesti {
                     kirjoitushetki
                 LIMIT ?
                 OFFSET ?";
-        $kysymysmerkit = array($aiheID, $viestejaSivulla, ($sivu - 1) * $viestejaSivulla);
+        $kysymysmerkit = array($aiheID, $viestejaSivulla, ($sivunumero - 1) * $viestejaSivulla);
 
         return Viesti::palautaViesteja($kysymysmerkit, $sql);
     }
-
+    
+    /**
+     * Kertoo monta viestiä on kirjoitettu aiheeseen.
+     * @param type $aiheID Aiheen tunnus
+     * @return type Viestien lukumäärä.
+     */
     public static function montaViestiaAiheessa($aiheID) {
         $sql = "SELECT COUNT(*) as lkm FROM VIESTI WHERE aihe = ?";
         $kysymysmerkit = array($aiheID);
@@ -55,7 +72,14 @@ class Viesti {
         
         return $kysely->fetchColumn();
     }
-
+    
+    /**
+     * Tekee kyselyn annetuilla parametreillä ja palauttaa
+     * taulukon viestejä.
+     * @param array $kysymysmerkit SQL-kyselyn kysymysmerkit.
+     * @param string $sql
+     * @return array Viestejä taulukkona.
+     */
     public static function palautaViesteja($kysymysmerkit, $sql) {
         $kysely = Kysely::teeKysely($sql, $kysymysmerkit);
         $rivit = $kysely->fetchAll();
@@ -74,6 +98,11 @@ class Viesti {
                             $viesti['aihe']);
     }
     
+    /**
+     * Palauttaa ID:tä vastaavan ID:n.
+     * @param int viestin ID
+     * @return viestiolio
+     */
     public static function etsiViestiJollaID($id) {
         $sql = "SELECT * FROM Viesti WHERE id = ?";
         $kysymysmerkit = array($id);
@@ -92,6 +121,10 @@ class Viesti {
                             $tulos->aihe);
     }
     
+    /**
+     * Lisää kantaan uuden viestin,
+     * joka vastaa oliota.
+     */
     public function lisaaKantaan() {
         $sql = "INSERT INTO Viesti(kirjoittaja, kirjoitushetki, teksti, aihe) 
             VALUES(?,?,?,?) RETURNING id";
@@ -104,22 +137,34 @@ class Viesti {
         if ($ok) {
             $this->id = $kysely->fetchColumn();
         }
-        return $ok;
+        return $ok; //En tarvinne tätä.
     }
     
+    /**
+     * Päivittää viestin tekstin.
+     * @param type $id Viestin ID.
+     * @param type $teksti Päivitetty teksti.
+     */
     public static function paivitaViesti($id, $teksti) {
         $sql = "UPDATE Viesti SET teksti = ? WHERE id = ?";
         $kysymysmerkit = array($teksti, $id);
         Kysely::teeKysely($sql, $kysymysmerkit);
     }
     
+    /**
+     * Poistaa kannasta viestin.
+     * @param type $id Poistettavan viestin ID.
+     */
     public static function poistaViesti($id) {
         $sql = "DELETE FROM Viesti WHERE id = ?";
         $kysymysmerkit = array($id);
         kysely::teeKysely($sql, $kysymysmerkit);
     }
 
-
+    /**
+     * Kertoo onko viesti oikeanmuotoinen.
+     * @return boolean TRUE jos oikeanmuotoinen, muuten FALSE.
+     */
     public function onkoKelvollinen() {
         if(strlen($this->teksti) > 0 && strlen($this->teksti) <= 4000) {
             return true;

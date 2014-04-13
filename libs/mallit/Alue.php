@@ -7,6 +7,10 @@ class Alue {
         $this->nimi = $nimi;
     }
     
+    /**
+     * Palauttaa kaikki olemassa olevat alueet.
+     * @return \Alue Alueet taulukkona.
+     */
     public static function haeKaikkiAlueet() {
         $sql = "SELECT * FROM Alue";
         $kysely = Kysely::teeKysely($sql, array());
