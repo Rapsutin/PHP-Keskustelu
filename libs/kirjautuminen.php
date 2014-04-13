@@ -23,26 +23,26 @@ if (empty($_POST["nimimerkki"])) {
     ));
 }
 
-$kayttaja = $_POST["nimimerkki"];
+$kirjoittaja = $_POST["nimimerkki"];
 
 
 if (empty($_POST["salasana"])) {
     naytaNakyma("kirjautuminen.php", array(
-      'kayttaja' => $kayttaja,
+      'kayttaja' => $kirjoittaja,
       'virhe' => "Kirjautuminen epäonnistui! Et antanut salasanaa.",
     ));
   }
 $salasana = $_POST["salasana"];
 
-if(Kayttaja::etsiKayttajaTunnuksilla($kayttaja, $salasana) != NULL) {
+if(Kayttaja::etsiKayttajaTunnuksilla($kirjoittaja, $salasana) != NULL) {
     session_start();
-    $kayttajaObject = Kayttaja::etsiKayttajaTunnuksilla($kayttaja, $salasana);
+    $kayttajaObject = Kayttaja::etsiKayttajaTunnuksilla($kirjoittaja, $salasana);
     
     $_SESSION['kirjautunut'] = $kayttajaObject;
     header('Location: etusivu.php');
 } else {
     naytaNakyma('kirjautuminen.php', 
-            array('kayttaja' => $kayttaja,
+            array('kayttaja' => $kirjoittaja,
                 'virhe' => "Kirjautuminen epäonnistui! Antamasi tunnus tai salasana on väärä."));
 }
 

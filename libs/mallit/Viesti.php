@@ -1,6 +1,7 @@
 <?php
 
 require_once '../libs/tietokantayhteys.php';
+require_once '../libs/kysely.php';
 
 class Viesti {
 
@@ -49,37 +50,46 @@ class Viesti {
 
     public static function montaViestiaAiheessa($aiheID) {
         $sql = "SELECT COUNT(*) as lkm FROM VIESTI WHERE aihe = ?";
-        $kysely = getTietokantayhteys()->prepare($sql);
-        $kysely->execute(array($aiheID));
+        $kysymysmerkit = array($aiheID);
+        $kysely = Kysely::teeKysely($sql, $kysymysmerkit);
+        
         return $kysely->fetchColumn();
     }
 
     public static function palautaViesteja($kysymysmerkit, $sql) {
-        $rivit = Viesti::teeKysely($kysymysmerkit, $sql);
+        $kysely = Kysely::teeKysely($sql, $kysymysmerkit);
+        $rivit = $kysely->fetchAll();
         $viestit = array();
         foreach ($rivit as $viesti) {
-            $viestit[] = new Viesti($viesti['id'], $viesti['kirjoittaja'], $viesti['kirjoitushetki'], $viesti['teksti'], $viesti['aihe']);
+            $viestit[] = Viesti::rakennaViestiArraysta($viesti);
         }
         return $viestit;
     }
-
-    public static function teeKysely($kysymysmerkit, $sql) {
-        $yhteys = getTietokantayhteys();
-        $kysely = $yhteys->prepare($sql);
-        $kysely->execute($kysymysmerkit);
-
-        $rivit = $kysely->fetchAll();
-        return $rivit;
+    
+    private static function rakennaViestiArraysta($viesti) {
+        return new Viesti(  $viesti['id'], 
+                            $viesti['kirjoittaja'], 
+                            $viesti['kirjoitushetki'], 
+                            $viesti['teksti'], 
+                            $viesti['aihe']);
     }
     
     public static function etsiViestiJollaID($id) {
         $sql = "SELECT * FROM Viesti WHERE id = ?";
-        $kysely = getTietokantayhteys()->prepare($sql);
-        $kysely->execute(array($id));
+        $kysymysmerkit = array($id);
+        $kysely = Kysely::teeKysely($sql, $kysymysmerkit);
         
         $tulos = $kysely->fetchObject();
-        $viesti = new Viesti($tulos->id, $tulos->kirjoittaja, $tulos->kirjoitushetki, $tulos->teksti, $tulos->aihe);
+        $viesti = Viesti::rakennaViestiTuloksesta($tulos);
         return $viesti;
+    }
+    
+    private static function rakennaViestiTuloksesta($tulos) {
+        return new Viesti(  $tulos->id, 
+                            $tulos->kirjoittaja, 
+                            $tulos->kirjoitushetki, 
+                            $tulos->teksti, 
+                            $tulos->aihe);
     }
     
     public function lisaaKantaan() {
@@ -99,14 +109,14 @@ class Viesti {
     
     public static function paivitaViesti($id, $teksti) {
         $sql = "UPDATE Viesti SET teksti = ? WHERE id = ?";
-        $kysely = getTietokantayhteys()->prepare($sql);
-        $kysely->execute(array($teksti, $id));
+        $kysymysmerkit = array($teksti, $id);
+        Kysely::teeKysely($sql, $kysymysmerkit);
     }
     
     public static function poistaViesti($id) {
         $sql = "DELETE FROM Viesti WHERE id = ?";
-        $kysely = getTietokantayhteys()->prepare($sql);
-        $kysely->execute(array($id));
+        $kysymysmerkit = array($id);
+        kysely::teeKysely($sql, $kysymysmerkit);
     }
 
 

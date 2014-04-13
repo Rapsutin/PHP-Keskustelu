@@ -1,4 +1,5 @@
 <?php
+require_once '../libs/kysely.php';
 class Kayttaja {
 
     private $nimimerkki;
@@ -6,13 +7,15 @@ class Kayttaja {
     private $viesteja;
     private $liittymisaika;
     private $avatar;
+    private $onYllapitaja;
 
-    public function __construct($nimimerkki, $salasana, $viesteja, $liittymisaika, $avatar) {
+    public function __construct($nimimerkki, $salasana, $viesteja, $liittymisaika, $avatar, $onYllapitaja) {
         $this->nimimerkki = $nimimerkki;
         $this->salasana = $salasana;
         $this->viesteja = $viesteja;
         $this->liittymisaika = $liittymisaika;
         $this->avatar = $avatar;
+        $this->onYllapitaja = $onYllapitaja;
     }
 
     public static function etsiKayttajaTunnuksilla($kayttaja, $salasana) {
@@ -24,17 +27,11 @@ class Kayttaja {
                     nimimerkki = ? AND
                     salasana = ?
                 LIMIT 1";
-        $yhteys = getTietokantayhteys();
-        $kysely = $yhteys->prepare($sql);
-        $kysely->execute(array($kayttaja, $salasana));
+        $kysymysmerkit = array($kayttaja, $salasana);
+        $kysely = Kysely::teeKysely($sql, $kysymysmerkit);
 
         $tulos = $kysely->fetchObject();
-        if ($tulos == null) {
-            return null;
-        } else {
-            $kayttaja = new Kayttaja($tulos->nimimerkki, $tulos->salasana, 
-                    $tulos->viesteja, $tulos->liittymisaika, $tulos->avatar);
-        }
+        $kayttaja = Kayttaja::palautaKayttaja($tulos);
 
         return $kayttaja;
     }
@@ -45,19 +42,32 @@ class Kayttaja {
                 WHERE
                     nimimerkki = ?
                 LIMIT 1";
-        $yhteys = getTietokantayhteys();
-        $kysely = $yhteys->prepare($sql);
-        $kysely->execute(array($kayttaja));
+        
+        $kysymysmerkit = array($kayttaja);
+        $kysely = Kysely::teeKysely($sql, $kysymysmerkit);
 
         $tulos = $kysely->fetchObject();
+        $kayttaja = Kayttaja::palautaKayttaja($tulos);
+
+        return $kayttaja;
+    }
+    
+    private static function palautaKayttaja($tulos) {
         if ($tulos == null) {
             return null;
         } else {
-            $kayttaja = new Kayttaja($tulos->nimimerkki, $tulos->salasana, $tulos->viesteja,
-                    $tulos->liittymisaika, $tulos->avatar);
+            $kayttaja = new Kayttaja($tulos->nimimerkki, $tulos->salasana, 
+                    $tulos->viesteja, $tulos->liittymisaika, $tulos->avatar,
+                    $tulos->onyllapitaja);
+            return $kayttaja;
         }
-
-        return $kayttaja;
+    }
+    
+    public function lisaaYksiViestilaskuriin() {
+        $this->viesteja += 1;
+        $sql = "UPDATE Kayttaja SET viesteja=? WHERE nimimerkki=?";
+        $kysymysmerkit = array($this->viesteja, $this->nimimerkki);
+        Kysely::teeKysely($sql, $kysymysmerkit);
     }
 
     public function getNimimerkki() {
@@ -79,6 +89,10 @@ class Kayttaja {
     public function getAvatar() {
         return $this->avatar;
     }
+    
+    public function onkoYllapitaja() {
+        return $this->onYllapitaja;
+    }
 
     public function setNimimerkki($nimimerkki) {
         $this->nimimerkki = $nimimerkki;
@@ -99,6 +113,11 @@ class Kayttaja {
     public function setAvatar($avatar) {
         $this->avatar = $avatar;
     }
+    
+    public function setOnYllapitaja($boolean) {
+        $this->onYllapitaja = $boolean;
+    }
+    
 
 }
 

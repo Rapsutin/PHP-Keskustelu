@@ -5,10 +5,10 @@ require_once 'mallit/Kayttaja.php';
 
 $viesti = Viesti::etsiViestiJollaID($_GET['viestiID']);
 session_start();
-$kayttaja = (object) $_SESSION['kirjautunut'];
+$kirjoittaja = (object) $_SESSION['kirjautunut'];
 
-if($kayttaja->getNimimerkki() != $viesti->getKirjoittaja()) {
-    header('Location: aihe.php');
+if($kirjoittaja->getNimimerkki() != $viesti->getKirjoittaja()) {
+    header('Location: aihe.php?id='.$data->aiheID);
 }
 
 if(!empty($_GET['poista'])) {
@@ -18,10 +18,12 @@ if(!empty($_GET['poista'])) {
 
 if(!empty($_POST['viesti']) && !empty($_GET['viestiID'])) {
     Viesti::paivitaViesti($_GET['viestiID'], $_POST['viesti']);
-    header('Location: aihe.php');
+    header('Location: aihe.php?id='.$_GET[aiheID]);
 }
 
 $viestiID = $_GET['viestiID'];
-naytaNakyma('muokkaaviestia.php', array('viestiID' => $viestiID));
+$aiheID = $_GET['aiheID'];
+naytaNakyma('muokkaaviestia.php', array('viestiID' => $viestiID,
+                                        'aiheID' => $aiheID));
 
 ?>

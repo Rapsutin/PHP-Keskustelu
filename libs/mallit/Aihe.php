@@ -1,6 +1,7 @@
 <?php
 
 require_once '../libs/tietokantayhteys.php';
+require_once '../libs/kysely.php';
 
 class Aihe {
 
@@ -18,9 +19,8 @@ class Aihe {
 
     public static function getAiheJollaID($id) {
         $sql = "SELECT * FROM Aihe WHERE id = ? LIMIT 1";
-        $yhteys = getTietokantayhteys();
-        $kysely = $yhteys->prepare($sql);
-        $kysely->execute(array($id));
+        $kysymysmerkit = array($id);
+        $kysely = Kysely::teeKysely($sql, $kysymysmerkit);
 
         $rivi = $kysely->fetchObject();
 
@@ -28,8 +28,38 @@ class Aihe {
 
         return $aihe;
     }
+    
+    public static  function getAiheetAlueella($alueenNimi) {
+        $sql = "SELECT * FROM Aihe WHERE alue = ?";
+        $kysymysmerkit = array($alueenNimi);
+        $kysely = Kysely::teeKysely($sql, $kysymysmerkit);
+        
+        $rivit = $kysely->fetchAll();
+        
+        $aiheet = array();
+        foreach($rivit as $rivi) {
+            $aiheet[] = new Aihe($rivi['id'], $rivi['luontiaika'], $rivi['alue'], $rivi['nimi']);
+        }
+        return $aiheet;
+    }    
+    
+    public function lisaaKantaan() {
+        
+        $sql = "INSERT INTO Aihe(luontiaika, alue, nimi) 
+            VALUES(?,?,?) RETURNING id";
+        $kysely = getTietokantayhteys()->prepare($sql);
+        
+        $ok = $kysely->execute(array(
+            $this->luontiaika,
+            $this->alue, $this->nimi));
+        
+        if ($ok) {
+            $this->id = $kysely->fetchColumn();
+        }
+        return $ok;
+    }
 
-    public function getId() {
+    public function getID() {
         return $this->id;
     }
 

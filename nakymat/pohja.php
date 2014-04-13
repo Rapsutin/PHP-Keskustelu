@@ -3,7 +3,7 @@ require_once 'kirjautunut.php';
 require_once 'mallit/Kayttaja.php';;
 if (onKirjautunut()) {
     session_start();
-    $kayttaja = $_SESSION['kirjautunut'];
+    $kirjoittaja = $_SESSION['kirjautunut'];
 }
 ?>
 <!DOCTYPE html>
@@ -25,7 +25,7 @@ if (onKirjautunut()) {
 
                 <?php if (onKirjautunut()) { ?>
                     <button type="button" class="btn btn-primary navbar-btn" href="#">
-                        <?php echo $kayttaja->getNimimerkki(); ?>
+                        <?php echo $kirjoittaja->getNimimerkki(); ?>
                     </button>
                 <?php } ?>
                 <a type="button" class="btn btn-default navbar-btn" href="haku.php">Haku</a>

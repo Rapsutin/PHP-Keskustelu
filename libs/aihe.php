@@ -4,6 +4,8 @@
 require_once '../libs/mallit/Viesti.php';
 require_once 'nakyma.php';
 
+$aiheID = $_GET['id'];
+
 $sivu = 1;
 if (isset($_GET['sivu'])) {
     $sivu = (int) $_GET['sivu'];
@@ -13,10 +15,10 @@ if (isset($_GET['sivu'])) {
 }
 
 $viestejaSivulla = 4;
-$viestejaAiheessa = Viesti::montaViestiaAiheessa(1);
+$viestejaAiheessa = Viesti::montaViestiaAiheessa($aiheID);
 $sivuja = ceil($viestejaAiheessa / $viestejaSivulla);
 
-$viestit = Viesti::palautaYhdenSivunViestit($viestejaSivulla, $sivu, 1);
-naytaNakyma('aihe.php', array('viestit' => $viestit, 'sivu' => $sivu, 'sivuja' => $sivuja));
+$viestit = Viesti::palautaYhdenSivunViestit($viestejaSivulla, $sivu, $aiheID);
+naytaNakyma('aihe.php', array('aiheID' => $aiheID, 'viestit' => $viestit, 'sivu' => $sivu, 'sivuja' => $sivuja));
 ?>
 

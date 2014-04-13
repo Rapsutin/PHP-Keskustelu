@@ -2,15 +2,19 @@ INSERT INTO Kayttaja VALUES(
     'Rapsutin',
     'salasana1234',
     40,
-    date '2010-09-12'
+    date '2010-09-12',
+    TRUE
     );
 
 INSERT INTO Kayttaja VALUES(
     'Jonne69',
     'ESESES',
     40,
-    date '2013-09-22'
+    date '2013-09-22',
+    FALSE
     );
+
+INSERT INTO Alue VALUES('Yleinen keskustelu');
 
 INSERT INTO Aihe (luontiaika, alue, nimi) VALUES(
     timestamp '2014-04-04 12:06:00',

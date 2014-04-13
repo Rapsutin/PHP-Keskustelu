@@ -6,7 +6,7 @@ $viesti = Viesti::etsiViestiJollaID($data->viestiID);
 <div class="container">
 
     <h4>Muokkaa viestiä</h4>
-    <form action ="muokkaaviestia.php?viestiID=<?php echo $viesti->getId() ?>" method ="POST">
+    <form action ="muokkaaviestia.php?viestiID=<?php echo $viesti->getId().'&aiheID='.$data->aiheID; ?>" method ="POST">
         <textarea rows="6" cols="50" name ="viesti"><?php echo $viesti->getTeksti() ?></textarea>
         <div>
             <button class="btn btn-default"><span class="glyphicon glyphicon-share-alt"></span> Muokkaa</button>
