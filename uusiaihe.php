@@ -26,7 +26,8 @@ if(!empty($aiheenNimi) && !empty($viestinTeksti)) {
     if(Aihe::tarkistaNimi($aiheenNimi) != null) {
         naytaNakyma('uusiaihe.php', array(  'alue' => $alue, 
                                             'virhe' => Aihe::tarkistaNimi($aiheenNimi),
-                                            'viesti' => $viestinTeksti));
+                                            'viesti' => $viestinTeksti,
+                                            'aiheenNimi' => $aiheenNimi));
     }
     $aihe = new Aihe(null, date('Y-m-d G:i:s'), $alue, $aiheenNimi);
     $aihe->lisaaKantaan();

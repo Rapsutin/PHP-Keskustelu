@@ -19,8 +19,8 @@ $aihe = Aihe::getAiheJollaID($data->aiheID);
     </h4>
     <div  class="panel panel-default">
         <table class="table table-bordered">
-            <col width="50px" />
-            <col width="300px" />
+            <col width="170px" />
+            <col width="700px" />
             <?php
             foreach ($data->viestit as $viesti) {
                 $kirjoittaja = Kayttaja::etsiKayttajaNimimerkilla($viesti->getKirjoittaja());
@@ -29,7 +29,7 @@ $aihe = Aihe::getAiheJollaID($data->aiheID);
                 <tr>
                     <td>
                         <p><a href="#"><?php echo $kirjoittaja->getNimimerkki() ?></a></p>
-                        <p><img src="http://upload.wikimedia.org/wikipedia/commons/1/1e/G._Rasputin.JPG" style="max-height: 100px; max-width: 100px;" /></p>
+                        <p><img src="<?php echo $kirjoittaja->getAvatar(); ?>" style="max-height: 100px; max-width: 100px;" /></p>
                         <p>Liittynyt: <?php echo $kirjoittaja->getLiittymisaika(); ?></p>
                         Viestejä: <?php echo $kirjoittaja->getViesteja(); ?>
                     </td>

@@ -8,7 +8,7 @@ CREATE TABLE Kayttaja(
     viesteja integer DEFAULT 0,
     liittymisaika date NOT NULL,
     onYllapitaja boolean DEFAULT FALSE,
-    avatar bytea
+    avatar varchar (1000)
     );
 
 
@@ -16,7 +16,7 @@ CREATE TABLE Aihe(
     id SERIAL PRIMARY KEY NOT NULL,
     luontiaika timestamp NOT NULL,
     alue varchar(100) REFERENCES Alue ON DELETE CASCADE ON UPDATE CASCADE NOT NULL,
-    nimi varchar(100) NOT NULL,
+    nimi varchar(100) NOT NULL
     );
 
 CREATE TABLE Viesti(
