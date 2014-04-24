@@ -94,6 +94,37 @@ class Kayttaja {
         Kysely::teeKysely($sql, $kysymysmerkit);
     }
     
+    public function lisaaKayttajaKantaan() {
+        $sql = "INSERT INTO Kayttaja VALUES (?,?,?,?,?,?)";
+        $kysmysmerkit = array(  $this->nimimerkki,
+                                $this->salasana,
+                                $this->viesteja,
+                                $this->liittymisaika,
+                                $this->avatar,
+                                $this->onYllapitaja);
+        Kysely::teeKysely($sql, $kysmysmerkit);
+    }
+    
+    public static function tarkistaSalasana($salasana) {
+        if (strlen($salasana) < 6) {
+            return "Salasanan on oltava vähintään 6 merkkiä!";
+        } else if(strlen($salasana) > 20) {
+            return "Salasanan on oltava enintään 20 merkkiä!";
+        } else {
+            return null;
+        }
+    }
+    
+    public static function tarkistaKayttajanimi($kayttajanimi) {
+        if(strlen($kayttajanimi) < 3) {
+            return "Käyttäjänimen on oltava vähintään 3 merkkiä!";
+        } else if(strlen($kayttajanimi) > 20) {
+            return "Käyttäjänimen on oltava enintään 20 merkkiä!";
+        } else {
+            return null;
+        }
+    }
+    
     
     public function lisaaYksiViestilaskuriin() {
         $this->lisaaViestilaskuriin(1);

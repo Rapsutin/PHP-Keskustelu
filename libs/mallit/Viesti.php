@@ -2,6 +2,7 @@
 
 require_once 'libs/tietokantayhteys.php';
 require_once 'libs/kysely.php';
+require_once 'libs/mallit/Kayttaja.php';
 
 class Viesti {
 
@@ -90,7 +91,7 @@ class Viesti {
         return $viestit;
     }
     
-    private static function rakennaViestiArraysta($viesti) {
+    public static function rakennaViestiArraysta($viesti) {
         return new Viesti(  $viesti['id'], 
                             $viesti['kirjoittaja'], 
                             $viesti['kirjoitushetki'], 
@@ -134,6 +135,9 @@ class Viesti {
             $this->kirjoittaja, $this->kirjoitushetki,
             $this->teksti, $this->aihe));
         
+        $kirjoittaja = Kayttaja::etsiKayttajaNimimerkilla($this->kirjoittaja);
+        $kirjoittaja->lisaaYksiViestilaskuriin();
+        
         if ($ok) {
             $this->id = $kysely->fetchColumn();
         }
@@ -166,10 +170,21 @@ class Viesti {
      * @return boolean TRUE jos oikeanmuotoinen, muuten FALSE.
      */
     public function onkoKelvollinen() {
-        if(strlen($this->teksti) > 0 && strlen($this->teksti) <= 4000) {
+        if(strlen($this->teksti) > 0 && !Viesti::onkoLiikaaTekstia($this->teksti)) {
             return true;
         }
         return false;
+    }
+    
+    public static function onkoLiikaaTekstia($teksti) {
+        if(strlen($teksti) > 4000) {
+            return true;
+        }
+        return false;
+    }
+    
+    public static function liikaaTekstiaVirhe($teksti) {
+        return "Viestissä on ".strlen($teksti)."/4000 merkkiä!";
     }
 
     public function getId() {

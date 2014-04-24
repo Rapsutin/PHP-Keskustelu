@@ -4,7 +4,6 @@ require_once 'libs/mallit/Kayttaja.php';
 require_once 'libs/kirjautunut.php';
 require_once 'libs/mallit/Aihe.php';
 $aihe = Aihe::getAiheJollaID($data->aiheID);
-
 ?>
 <div class="container">
     <h4>Aihe: <?php echo $aihe->getNimi(); ?>

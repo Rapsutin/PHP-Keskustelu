@@ -1,6 +1,7 @@
 <?php
 require_once 'libs/kirjautunut.php';
-require_once 'libs/mallit/Kayttaja.php';;
+require_once 'libs/mallit/Kayttaja.php';
+
 if (onKirjautunut()) {
     session_start();
     $kirjoittaja = $_SESSION['kirjautunut'];
@@ -40,7 +41,7 @@ if (onKirjautunut()) {
                 <?php } 
                 else {?>
                     <form action="kirjautuminen.php" method ="GET">
-                        <button type="submit" class="btn btn-link navbar-btn">Kirjaudu sisään</button>
+                        <button type="submit" class="btn btn-link navbar-btn">Kirjaudu sisään/Rekisteröidy</button>
                     </form>
                 <?php } ?>
                     
@@ -49,7 +50,12 @@ if (onKirjautunut()) {
         </div>
         <?php if (!empty($data->virhe)): ?>
             <div class="alert alert-danger"><?php echo $data->virhe; ?></div>
-        <?php endif; ?>
+        <?php endif; 
+              if(isset($_SESSION['virhe'])): ?>
+                  <div class="alert alert-danger"><?php echo $_SESSION['virhe'];?></div>
+              <?php unset($_SESSION['virhe']); endif;?>
+
+            
 
         <?php
         require 'nakymat/' . $sivu;

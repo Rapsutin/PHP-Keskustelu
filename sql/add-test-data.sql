@@ -14,24 +14,6 @@ INSERT INTO Kayttaja VALUES(
     FALSE
     );
 
-INSERT INTO Alue VALUES('Yleinen keskustelu');
-
-INSERT INTO Aihe (luontiaika, alue, nimi) VALUES(
-    timestamp '2014-04-04 12:06:00',
-    'Yleinen keskustelu',
-    'Olympialaiset');
-
-INSERT INTO Viesti(kirjoittaja, kirjoitushetki, teksti, aihe) VALUES(
-    'Rapsutin',
-    timestamp '2014-04-04 12:19:00',
-    'Nyt testataaaaaaaannn!!!!!!',
-    1);
-INSERT INTO Viesti(kirjoittaja, kirjoitushetki, teksti, aihe) VALUES(
-    'Jonne69',
-    timestamp '2014-04-04 12:20:00',
-    'JUST NII!!! Lorum ipsum ja nii edellee',
-    1);
-
 
     
     

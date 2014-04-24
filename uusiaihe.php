@@ -5,7 +5,7 @@ require_once 'libs/mallit/Aihe.php';
 require_once 'libs/mallit/Kayttaja.php';
 require_once 'libs/mallit/Viesti.php';
 
-$aiheenNimi = $_POST['aiheenNimi'];
+$aiheenNimi = trim($_POST['aiheenNimi']);
 $viestinTeksti = $_POST['viesti'];
 $alue = $_GET['alue'];
 
@@ -23,6 +23,11 @@ if(empty($aiheenNimi) && !empty($viestinTeksti)) {
 
 //Lisätään uusi aihe.
 if(!empty($aiheenNimi) && !empty($viestinTeksti)) {
+    if(Aihe::tarkistaNimi($aiheenNimi) != null) {
+        naytaNakyma('uusiaihe.php', array(  'alue' => $alue, 
+                                            'virhe' => Aihe::tarkistaNimi($aiheenNimi),
+                                            'viesti' => $viestinTeksti));
+    }
     $aihe = new Aihe(null, date('Y-m-d G:i:s'), $alue, $aiheenNimi);
     $aihe->lisaaKantaan();
     

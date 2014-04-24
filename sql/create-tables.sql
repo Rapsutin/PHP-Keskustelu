@@ -15,8 +15,8 @@ CREATE TABLE Kayttaja(
 CREATE TABLE Aihe(
     id SERIAL PRIMARY KEY NOT NULL,
     luontiaika timestamp NOT NULL,
-    alue varchar(100) REFERENCES Alue NOT NULL,
-    nimi varchar(100) NOT NULL
+    alue varchar(100) REFERENCES Alue ON DELETE CASCADE ON UPDATE CASCADE NOT NULL,
+    nimi varchar(100) NOT NULL,
     );
 
 CREATE TABLE Viesti(
@@ -24,13 +24,13 @@ CREATE TABLE Viesti(
     kirjoittaja varchar(20) REFERENCES Kayttaja NOT NULL,
     kirjoitushetki timestamp NOT NULL,
     teksti varchar(4000),
-    aihe INTEGER REFERENCES Aihe(id)
+    aihe INTEGER REFERENCES Aihe(id) ON DELETE CASCADE
     );
 	
 	
 CREATE TABLE Luetut(
-    lukija varchar(20) REFERENCES Kayttaja NOT NULL,
-    viestiID INTEGER REFERENCES Viesti NOT NULL,
-    primary key(lukija, viestiID)
+    lukija varchar(20) REFERENCES Kayttaja ON DELETE CASCADE NOT NULL,
+    aiheID INTEGER REFERENCES aihe ON DELETE CASCADE NOT NULL,
+    primary key(lukija, aiheID)
     );
 
