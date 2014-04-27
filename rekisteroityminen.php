@@ -4,7 +4,7 @@ require_once 'libs/nakyma.php';
 require_once 'libs/mallit/Kayttaja.php';
 
 $nimimerkki = trim($_POST['uusinimi']);
-$salasana = $_POST['uusisalasana'];
+$salasana = $_POST['uusisalasana']; 
 $vahvistus = $_POST['vahvistasalasana'];
 
 if (empty($nimimerkki)) {
@@ -26,12 +26,13 @@ if (empty($vahvistus) || $salasana != $vahvistus) {
 if(is_null(Kayttaja::etsiKayttajaNimimerkilla($nimimerkki))) {
     tarkistaKayttajanimi($nimimerkki);
     tarkistaSalasana($salasana);
+    $tehdaankoYllapitaja = 1- Kayttaja::onkoRekisteroityneita(); //Ensimmäinen rekisteröitynyt on ylläpitäjä
     $uusiKayttaja = new Kayttaja(   $nimimerkki, 
                                     $salasana, 
                                     0, 
                                     date('Y-m-d'),
                                     null, 
-                                    false);
+                                    $tehdaankoYllapitaja);
     $uusiKayttaja->lisaaKayttajaKantaan();
     header('Location: etusivu.php');
     exit();

@@ -7,8 +7,9 @@ CREATE TABLE Kayttaja(
     salasana varchar(20) NOT NULL,
     viesteja integer DEFAULT 0,
     liittymisaika date NOT NULL,
-    onYllapitaja boolean DEFAULT FALSE,
-    avatar varchar (1000)
+    avatar varchar (1000),
+    onYllapitaja boolean DEFAULT FALSE
+    
     );
 
 

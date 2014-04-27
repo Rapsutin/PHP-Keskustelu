@@ -9,6 +9,11 @@ require_once 'libs/kirjautunut.php';
 
 $aiheID = (int) $_GET['aiheID'];
 $viesti = trim($_POST['viesti']);
+$vastattavanID = $_GET['vastattavanID'];
+if(isset($vastattavanID)) {
+    $lainattavaViesti = Viesti::etsiViestiJollaID($vastattavanID);
+    
+}
 
 if (!onKirjautunut()) {
     header("Location: aihe.php?id=" . $aiheID);
@@ -49,8 +54,26 @@ if($_GET['tarkistaViesti'] == 1 && empty($viesti)) {
 
 if (isset($_GET['aiheID'])) {
     $aiheID = $_GET['aiheID'];
-    naytaNakyma('uusiviesti.php', array('aihe' => Aihe::getAiheJollaID($aiheID)));
+    $lainaus;
+    if(isset($lainattavaViesti)) {
+        $lainaus = teeLainaus($lainattavaViesti);
+    }
+   
+    
+    naytaNakyma('uusiviesti.php', array('aihe' => Aihe::getAiheJollaID($aiheID),
+                                        'teksti' => $lainaus));
 } else {
     naytaNakyma('alue.php', array('virhe' => 'Virheellinen URL!'));
+}
+
+function teeLainaus($lainattavaViesti) {
+    $lainattavaTeksti = $lainattavaViesti->getTeksti();
+    $lainauksetTekstissa = Viesti::erotaLainaukset($lainattavaTeksti);
+    
+    $lainattavaTeksti = str_replace($lainauksetTekstissa, '', $lainattavaTeksti);
+    
+    $lll = implode('', $lainauksetTekstissa);
+    
+    return $lll.'(q)'.$lainattavaTeksti.' -'.$lainattavaViesti->getKirjoittaja().'(/q)';
 }
 ?>

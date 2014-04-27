@@ -186,6 +186,26 @@ class Viesti {
     public static function liikaaTekstiaVirhe($teksti) {
         return "Viestissä on ".strlen($teksti)."/4000 merkkiä!";
     }
+    
+    public static function parseroiLainaukset($teksti) {
+        $lainaukset = Viesti::erotaLainaukset($teksti);
+        $teksti = str_replace($lainaukset, '', $teksti);
+        $lainaukset = str_replace(array('(q)', '(/q)'), '', $lainaukset);
+        
+        foreach($lainaukset as $lainaus) {
+            echo "<p style='background-color:LightGray;'><font color='green'>".$lainaus."</font></p>";
+        }
+        echo $teksti;
+    }
+    
+    public static function erotaLainaukset($teksti) {
+        $lainaukset = array();
+        $regex = '/\(q\).*?\(\/q\)/s';
+        
+        preg_match_all($regex, $teksti, $lainaukset);
+        
+        return $lainaukset[0];
+    }
 
     public function getId() {
         return $this->id;

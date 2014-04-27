@@ -125,6 +125,33 @@ class Kayttaja {
         }
     }
     
+    public function paivitaSalasana($salasana) {
+        $sql = "UPDATE Kayttaja SET salasana = ? WHERE nimimerkki = ?";
+        Kysely::teeKysely($sql, array($salasana, $this->nimimerkki));
+        $this->paivitaKirjautunutKayttajaOlio();
+    }
+    
+    public function paivitaAvatar($kuvanURL) {
+        $sql = "UPDATE Kayttaja SET avatar = ? WHERE nimimerkki = ?";
+        Kysely::teeKysely($sql, array($kuvanURL, $this->nimimerkki));
+        $this->paivitaKirjautunutKayttajaOlio();
+    }
+    
+    public function paivitaKirjautunutKayttajaOlio() {
+        $kayttajaObject = Kayttaja::etsiKayttajaNimimerkilla($this->nimimerkki);
+        $_SESSION['kirjautunut'] = $kayttajaObject;
+    }
+    
+    /**
+     * Kertoo onko järjestelmään rekisteröitynyt kukaan.
+     * @return type 1 jos on, muuten 0.
+     */
+    public static function onkoRekisteroityneita() {
+        $sql = 'SELECT count(*) FROM (SELECT 1 FROM Kayttaja LIMIT 1) t;';
+        $rivit = Kysely::teeKysely($sql, array());
+        $tulos = $rivit->fetchColumn();
+        return $tulos;
+    }
     
     public function lisaaYksiViestilaskuriin() {
         $this->lisaaViestilaskuriin(1);

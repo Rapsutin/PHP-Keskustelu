@@ -2,6 +2,7 @@
 require_once 'libs/mallit/Viesti.php';
 require_once 'libs/mallit/Luetut.php';
 require_once 'libs/kirjautunut.php';
+require_once 'nakymat/sivuvalinta.php';
 ?>
 <div class="container">
     <h4><?php echo $data->alueID ?> <?php 
@@ -58,4 +59,6 @@ require_once 'libs/kirjautunut.php';
                 <span class="glyphicon glyphicon-plus"></span> Uusi aihe
             </a>
     <?php } ?>
+    
+    <?php luoSivuvalinta('alue.php?id='.$data->alueID, $data->sivu, $data->sivuja); ?>
 </div>

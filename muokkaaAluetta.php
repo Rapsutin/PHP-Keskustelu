@@ -7,7 +7,7 @@ require_once 'libs/mallit/Kayttaja.php';
 session_start();
 $kirjautunut = $_SESSION['kirjautunut'];
 
-if(isset($_POST['alueenNimi'])) {
+if(!empty($_POST['alueenNimi'])) {
     $alueenNimi = trim($_POST['alueenNimi']);
 }
 

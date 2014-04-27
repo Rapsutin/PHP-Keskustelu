@@ -18,7 +18,7 @@ require_once 'libs/mallit/Kayttaja.php';
             </tr>
             <?php foreach (Alue::haeKaikkiAlueet() as $alue): ?>
                 <tr>
-                    <td><a href="alue.php?id=<?php echo $alue->getNimi(); ?>"><?php echo $alue->getNimi(); ?></a></td>
+                    <td><a href="alue.php?id=<?php echo $alue->getNimi(); ?>"><?php echo htmlspecialchars($alue->getNimi()); ?></a></td>
                     <td><?php echo $alue->getAiheitaAlueella(); ?></td> 
                     <td><?php echo $alue->getViestejaAlueella(); ?></td>
                 </tr>

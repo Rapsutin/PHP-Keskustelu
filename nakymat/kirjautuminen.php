@@ -19,11 +19,11 @@
             <p></p>
             <button type="laheta">Kirjaudu sisään</button>
         </div>
-        <div class="checkbox">
+<!--        <div class="checkbox">
             <label>
                 <input type="checkbox" name="muista"> Muista kirjautuminen
             </label>
-        </div>
+        </div>-->
     </form>
 
 
@@ -32,7 +32,7 @@
         <h2>Rekisteröityminen</h2>
         <div class="input-group">
             Käyttäjänimi
-            <input type="text" style="width: 240px" class="form-control" name="uusinimi" value="<?php echo $data->kayttajanimi ?>"></input>
+            <input type="text" style="width: 240px" class="form-control" name="uusinimi" value="<?php echo htmlspecialchars($data->kayttajanimi); ?>"></input>
         </div>
         <div class="input-group">
             Salasana

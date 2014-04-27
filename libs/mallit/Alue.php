@@ -49,6 +49,9 @@ class Alue {
         }
         return null;
     }
+        
+  
+      
     
     
     public function getAiheitaAlueella() {
@@ -56,12 +59,12 @@ class Alue {
     }
     
     public function getViestejaAlueella() {
-        $viesteja = 0;
-        $aiheet = Aihe::getAiheetAlueella($this->nimi);
-        foreach($aiheet as $aihe) {
-            $viesteja += Viesti::montaViestiaAiheessa($aihe->getID());
-        }
-        return $viesteja;
+        $sql = 'SELECT COUNT(*) 
+                FROM Alue, Aihe, Viesti
+                WHERE Alue.nimi = Aihe.alue AND Aihe.id = Viesti.aihe AND Alue.nimi = ?';
+        $tulos = kysely::teeKysely($sql, array($this->nimi));
+        $lukumaara = $tulos->fetchColumn();
+        return $lukumaara;
     }
     public function getNimi() {
         return $this->nimi;

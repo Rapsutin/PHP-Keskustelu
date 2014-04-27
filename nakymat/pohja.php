@@ -25,11 +25,11 @@ if (onKirjautunut()) {
             <div class="navbar-header pull-left">
 
                 <?php if (onKirjautunut()) { ?>
-                    <button type="button" class="btn btn-primary navbar-btn" href="#">
+                    <a type="button" class="btn btn-primary navbar-btn" href="muokkaaprofiilia.php">
                         <?php echo $kirjoittaja->getNimimerkki(); ?>
-                    </button>
+                    </a>
                 <?php } ?>
-                <a type="button" class="btn btn-default navbar-btn" href="haku.php">Haku</a>
+<!--                <a type="button" class="btn btn-default navbar-btn" href="haku.php">Haku</a>-->
 
 
             </div>
